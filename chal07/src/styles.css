@@ -3,13 +3,13 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  box-sizing: border-box;
   width: 100%;
   height: 100%;
   background-color: black;
 }
 
 .container {
+  box-sizing: border-box;
   width: 80%;
   height: 100%;
   display: grid;
@@ -53,18 +53,18 @@ body {
 
 .inputChild {
   background-color: green;
+  display: flex;
+  flex-direction: column;
 }
 
 .result {
   background-color: aqua;
-  width: 100%;
-  height: 70%;
-  margin: 50px;
-  padding: 20px;
+  width: 80%;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   font-size: 100px;
+  margin: 10px;
 }
 
 #input {

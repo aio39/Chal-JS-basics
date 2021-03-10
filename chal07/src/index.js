@@ -1,4 +1,5 @@
 const resultWindow = document.querySelector('.result');
+const subResultWindow = document.querySelector('.subResult');
 const numberButtons = document.querySelectorAll('.num');
 const operatorButtons = document.querySelectorAll('.oper');
 const equalsButton = document.querySelector('.equals');
@@ -7,10 +8,17 @@ const cancelButtons = document.querySelector('.cancel');
 let prev = 0;
 let next = 0;
 let nowOperMode;
+let noeOperSign;
+
+let isDoubleEqualsClick = false;
 
 console.log(nowOperMode == undefined);
 console.log(nowOperMode == null);
 console.log(null == undefined);
+
+const refreshSubResultWindow = (next) => {
+  subResultWindow.innerHTML = `${prev} ${noeOperSign} ${next} `;
+};
 
 const refreshResultWindow = (num) => {
   resultWindow.innerHTML = num;
@@ -72,6 +80,8 @@ const operModeChange = (innerHTML) => {
 
 const operatorClick = (e) => {
   const clickOperator = e.target.innerHTML;
+  noeOperSign = e.target.innerHTML;
+  refreshSubResultWindow('');
   resultWindowNumToPrev();
   operModeChange(e.target.innerHTML);
 };
@@ -96,6 +106,7 @@ const equalsClick = (e) => {
   operExec();
   refreshResultWindow(prev);
   nowOperMode = null;
+  refreshSubResultWindow(next);
 };
 
 const cancelClick = (e) => {
