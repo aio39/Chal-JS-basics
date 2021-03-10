@@ -137,9 +137,12 @@ const cancelClick = (e) => {
   nowOperMode = null;
   next = 0;
   prev = 0;
+  prev2 = 0;
   refreshResultWindow(0);
+  refreshSubResultWindow('');
   isPrevClickEquals = false;
   isPrevClickOper = false;
+  isAbleCombineNum = true;
 };
 
 for (let i = 0; i < numberButtons.length; i++) {
