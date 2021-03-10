@@ -6,6 +6,7 @@ const equalsButton = document.querySelector('.equals');
 const cancelButtons = document.querySelector('.cancel');
 
 let prev = 0;
+let prev2 = 0;
 let next = 0;
 let nowOperMode;
 let noeOperSign;
@@ -20,6 +21,7 @@ console.log(null == undefined);
 
 const refreshSubResultWindow = (next) => {
   subResultWindow.innerHTML = `${prev} ${noeOperSign} ${next} `;
+  console.log('서브 결과창이 갱신되었습니다.');
 };
 
 const refreshResultWindow = (num) => {
@@ -36,27 +38,28 @@ const resultWindowNumToPrev = () => {
   console.log(`prev: ${prev}`);
 };
 
-const operExec = () => {
-  next = resultWindow.innerHTML;
+const operExec = (num1, num2) => {
   let result;
+  console.log(num1, num2);
   switch (nowOperMode) {
     case 'plus':
-      result = parseFloat(prev) + parseFloat(next);
+      result = parseFloat(num1) + parseFloat(num2);
       break;
     case 'minus':
-      result = parseFloat(prev) - parseFloat(next);
+      result = parseFloat(num1) - parseFloat(num2);
       break;
     case 'multi':
-      result = parseFloat(prev) * parseFloat(next);
+      result = parseFloat(num1) * parseFloat(num2);
       break;
     case 'divide':
-      result = parseFloat(prev) / parseFloat(next);
+      result = parseFloat(num1) / parseFloat(num2);
       break;
     default:
       console.log('eoprExec에서 오류 발생,');
       break;
   }
-  refreshSubResultWindow(next);
+  refreshSubResultWindow(num2);
+  prev2 = prev;
   savePrev(result);
 };
 
@@ -112,12 +115,22 @@ const numberClick = (e) => {
 };
 
 const equalsClick = (e) => {
-  operExec();
+  if (isPrevClickEquals) {
+    let temp = next;
+    next = resultWindow.innerHTML;
+    operExec(next, temp);
+    next = temp;
+  } else {
+    temp = next;
+    next = resultWindow.innerHTML;
+    operExec(prev, next);
+  }
+
   refreshResultWindow(prev);
-  nowOperMode = null;
   isPrevClickEquals = true;
   isPrevClickOper = false;
   isAbleCombineNum = false;
+  console.log(prev2, prev, next, 'prev2, prev, next입니다.');
 };
 
 const cancelClick = (e) => {
