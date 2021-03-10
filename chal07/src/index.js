@@ -10,7 +10,9 @@ let next = 0;
 let nowOperMode;
 let noeOperSign;
 
-let isDoubleEqualsClick = false;
+let isPrevClickEquals = false;
+let isPrevClickOper = false;
+let isAbleCombineNum = true;
 
 console.log(nowOperMode == undefined);
 console.log(nowOperMode == null);
@@ -54,6 +56,7 @@ const operExec = () => {
       console.log('eoprExec에서 오류 발생,');
       break;
   }
+  refreshSubResultWindow(next);
   savePrev(result);
 };
 
@@ -84,6 +87,9 @@ const operatorClick = (e) => {
   refreshSubResultWindow('');
   resultWindowNumToPrev();
   operModeChange(e.target.innerHTML);
+  isPrevClickEquals = false;
+  isPrevClickOper = true;
+  isAbleCombineNum = false;
 };
 
 const numberClick = (e) => {
@@ -92,21 +98,26 @@ const numberClick = (e) => {
   if (resultWindowsNumber == 0) {
     refreshResultWindow(clickNumber);
     // console.log('현재 숫자가 0이므로 숫자를 그대로 추가합니다.');
-  } else if (nowOperMode != null) {
+  } else if (isAbleCombineNum == false) {
     refreshResultWindow(clickNumber);
+    isAbleCombineNum = true;
   } else {
     const combinedNumber = '' + resultWindowsNumber + clickNumber;
     refreshResultWindow(combinedNumber);
     // console.log('이전 숫자를 이어 줍니다.');
   }
   //   console.log(`넘퍼 패드${inputtedNum}가 눌려졌습니다.`);
+  isPrevClickEquals = false;
+  isPrevClickOper = false;
 };
 
 const equalsClick = (e) => {
   operExec();
   refreshResultWindow(prev);
   nowOperMode = null;
-  refreshSubResultWindow(next);
+  isPrevClickEquals = true;
+  isPrevClickOper = false;
+  isAbleCombineNum = false;
 };
 
 const cancelClick = (e) => {
@@ -114,6 +125,8 @@ const cancelClick = (e) => {
   next = 0;
   prev = 0;
   refreshResultWindow(0);
+  isPrevClickEquals = false;
+  isPrevClickOper = false;
 };
 
 for (let i = 0; i < numberButtons.length; i++) {
