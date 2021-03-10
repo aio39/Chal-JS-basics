@@ -98,6 +98,13 @@ const equalsClick = (e) => {
   nowOperMode = null;
 };
 
+const cancelClick = (e) => {
+  nowOperMode = null;
+  next = 0;
+  prev = 0;
+  refreshResultWindow(0);
+};
+
 for (let i = 0; i < numberButtons.length; i++) {
   const numberButton = numberButtons[i];
   numberButton.addEventListener('click', numberClick);
@@ -109,3 +116,5 @@ for (let i = 0; i < operatorButtons.length; i++) {
 }
 
 equalsButton.addEventListener('click', equalsClick);
+
+cancelButtons.addEventListener('click', cancelClick);
