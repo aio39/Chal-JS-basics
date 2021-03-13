@@ -22,7 +22,7 @@ const nextChrisYear = (function (isPassingChris, year) {
 
 const nextChirsDate = new Date(nextChrisYear, 11, 25);
 
-let untilChris = nextChirsDate - now;
+let untilChris = nextChirsDate - now + 9 * 60 * 1000;
 
 console.log(untilChris);
 
