@@ -11,20 +11,30 @@ const pushToLocal = (listName, listArr) => {
 };
 
 const handleTodoStatus = (e) => {
-  console.log(e.target.parentElement);
   const li = e.target.parentElement;
   const text = li.getElementsByTagName('span')[0].innerText;
   const id = li.getAttribute('data-id');
   const nowTodoType = li.className;
 
   if (nowTodoType == 'pending') {
-    console.log(nowTodoType);
     pushFinishedTodo(text, id);
     pendingTodoList = deleteTodo(pendingTodoList, id);
   }
   if (nowTodoType == 'finish') {
-    console.log(nowTodoType);
     pushPendingTodo(text, id);
+    finishedTodoList = deleteTodo(finishedTodoList, id);
+  }
+  refresh();
+};
+
+const handleDelete = (e) => {
+  const li = e.target.parentElement;
+  const id = li.getAttribute('data-id');
+  const nowTodoType = li.className;
+  if (nowTodoType == 'pending') {
+    pendingTodoList = deleteTodo(pendingTodoList, id);
+  }
+  if (nowTodoType == 'finish') {
     finishedTodoList = deleteTodo(finishedTodoList, id);
   }
   refresh();
@@ -55,9 +65,13 @@ const makeTodoLi = (text, id, todoType = 'pending') => {
 
   const textSpan = document.createElement('span');
   textSpan.innerText = text;
+
   const cancelButton = document.createElement('button');
   const changeButton = document.createElement('button');
+
   cancelButton.innerText = 'X';
+  cancelButton.addEventListener('click', handleDelete);
+
   if (todoType == 'pending') {
     changeButton.innerText = 'V';
   } else {
